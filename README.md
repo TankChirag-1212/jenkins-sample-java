@@ -1,47 +1,47 @@
-                                                                                    Jenkin Project
-Project Overview.
+## Jenkins First Day
 
-1. Perform installation of Jenkins Locally and configure it.
+#### 1. Performing installation of Jenkins.
 
-before installing jenkins we must install latest openJDK available for your Distro.
+before installing jenkins we must install latest openJDK inside local machine.<br>
+
 ![alt text](img/image.png)
 
-then add apt repository and perform installation using following commands.
+Now to install the latest version of jenkins add apt repository and perform installation using following commands.
 
-![alt text](img/image-1.png)
+![alt text](img/image1.png)
 
-post installation jenkin will run on port 8080 on your localhost.
-to access Jenkins open Browser and enter URL. http://localhost:8080/
+**post installation jenkin will run on port 8080 on your localhost.** to access Jenkins open Browser and enter URL. http://localhost:8080/
 
-![alt text](img/image-2.png)
+![alt text](img/image2.png)
 
-The command: sudo cat /var/lib/jenkins/secrets/initialAdminPassword will print the password at console.
+now run the below command to get the initial Admin Password. The command will print the password at console.<br>
+`sudo cat /var/lib/jenkins/secrets/initialAdminPassword`<br> 
 
-post unlocking jenkin create a user account to use jenkin or you can use admin account as well.
 
-2. Run a sample java build using free style project.
+#### 2. Running a free style Job.
 
-    a. create a simple free stype project 
+1. after installing the plugins and configuring the jenkins create a simple free style job shown below
+![alt text](img/image3.png)
 
-![alt text](img/image-%203.png)
+2. add description for Project pipeline (its optional).
+![alt text](img/image4.png)
 
-    b. add description for Project pipeline.
-![alt text](img/image-4.png)
+3. enter SCM details for fetching the code from the github and building code.
+Note: choose correct branch name to be fetched and build from SCM.
 
-    c. enter SCM details for fetching and building code.
-    Note: choose correct branch name to be fetched and build from SCM.
+![alt text](img/image5.png)
 
-![alt text](img/image-5.png)
+4. we can use the build trigger to run the build after every 2 minutes by scheduling to run at every 5 minutes using below.
 
-    d. we have to trigger the build after every 5 minutes
+![alt text](img/image6.png)
 
-![alt text](img/image-6.png)
+5. in build steps use the execute shell option and write the command to compile and run the Sample.java which is on the github repo we provided
 
-    e. provide Build command in excute shell in build steps to build Java code.
-
-![alt text](img/image-8.png)
+![alt text](img/image7.png)    
     
-    
-    f. building is scheduled to buid after every 5 minutes.
+6. after configing the sample_java_job run build command to build the job and all the logs can be seen in console output of the build #1
 
-![alt text](img/image-7.png)
+![alt text](img/image8.png)
+
+7. as we use the build trigger and scheduled the job tu build at every 2 minutes as shown below 
+![alt text](img/image9.png)
