@@ -1,47 +1,68 @@
-## Jenkins First Day
+Addressbook Tutorial
+====================
 
-#### 1. Performing installation of Jenkins.
+This tutorial teaches you some of the basic concepts in [Vaadin Framework](https://vaadin.com). It is meant to be
+a fast read for learning how to get started - not an example on how application should be
+designed. Please note this example uses and requires Java 8 to work.
 
-before installing jenkins we must install latest openJDK inside local machine.<br>
-
-![alt text](img/image.png)
-
-Now to install the latest version of jenkins add apt repository and perform installation using following commands.
-
-![alt text](img/image1.png)
-
-**post installation jenkin will run on port 8080 on your localhost.** to access Jenkins open Browser and enter URL. http://localhost:8080/
-
-![alt text](img/image2.png)
-
-now run the below command to get the initial Admin Password. The command will print the password at console.<br>
-`sudo cat /var/lib/jenkins/secrets/initialAdminPassword`<br> 
+![Addressbook Screenshot](addressbook_screenshot.png "Addressbook Screenshot")
 
 
-#### 2. Running a free style Job.
+Running the example from the command line
+-------------------
+```
+$ mvn jetty:run
+```
 
-1. after installing the plugins and configuring the jenkins create a simple free style job shown below
-![alt text](img/image3.png)
+Open [http://localhost:8080/](http://localhost:8080/)
 
-2. add description for Project pipeline (its optional).
-![alt text](img/image4.png)
 
-3. enter SCM details for fetching the code from the github and building code.
-Note: choose correct branch name to be fetched and build from SCM.
+Importing in IntelliJ IDEA 14
+--------------------
+These instructions were tested on IntelliJ IDEA 14 CE. You can get it from https://www.jetbrains.com/idea/
 
-![alt text](img/image5.png)
+To get the project up and running in IDEA, do:
+- File -> New -> Project from Version Control -> Git
+- The URL to use is https://github.com/vaadin/addressbook.git
+- If you get a message about "Non-managed pom.xml file found". Choose "Add as Maven Project"
+- If you get a message about no JDK or SDK being selected. Choose "Configure" and select your installed JDK. You can also set the JDK using File -> Project Structure
+- To start the project, find the "Maven Projects" tab on the right hand side of the screen and navigate to
+  - Vaadin Web Application -> Plugins -> jetty -> jetty:run
+  - Click the play button or right click and select Run (Select Debug instead to run in debug mode)
 
-4. we can use the build trigger to run the build after every 2 minutes by scheduling to run at every 5 minutes using below.
+You should now have a Jetty server running on localhost:8080. Navigate to http://localhost:8080 to play with the application
 
-![alt text](img/image6.png)
+Importing in NetBeans 8
+--------------------
+These instructions were tested on NetBeans 8.0.2. You can get it from https://www.netbeans.org
 
-5. in build steps use the execute shell option and write the command to compile and run the Sample.java which is on the github repo we provided
+To checkout and run the project in NetBeans, do:
+- Team -> Git -> Clone
+- Set repository URL to https://github.com/vaadin/addressbook.git
+- Finish
+- Right click the imported project (Vaadin Addressbook Application) and select Run
+- Select GlassFish Server 4.1 -> Remember in Current IDE Session -> OK
 
-![alt text](img/image7.png)    
-    
-6. after configing the sample_java_job run build command to build the job and all the logs can be seen in console output of the build #1
+You should now have a GlassFish server running on localhost:8080 and a browser tab should also be automatically opened with this location
 
-![alt text](img/image8.png)
+Importing in Eclipse
+--------------------
+These instructions were tested on Eclipse IDE for Java EE Developers Luna SR2. You can get it from http://eclipse.org/downloads/
 
-7. as we use the build trigger and scheduled the job tu build at every 2 minutes as shown below 
-![alt text](img/image9.png)
+To checkout and run the project in Eclipse, do:
+- File -> Import...
+- Check out Maven Projects from SCM
+- Choose Git from SCM menu
+  - If you do not see "Git" in the SCM menu, click "Find more SCM connectors in the m2e Marketplace" and install "m2e-egit". Restart Eclipse and start over.
+- Set the repository URL to https://github.com/vaadin/addressbook.git
+- Right click the imported "addressbook" and choose Run As -> Maven Build...
+  - Set the goal to "jetty:run" and click "Run"
+
+You should now have a Jetty server running on localhost:8080. Navigate to [http://localhost:8080/](http://localhost:8080/) to play with the application
+
+To use the built in server adapters of Eclipse, instead of doing "Run As -> Maven Build..." you can do
+- Run As -> Run on Server
+- Select the server you want to run on, e.g. Apache Tomcat 8 and click ok
+- *Do not use the suggested J2EE Preview server* as it is outdated, deprecated and does not support Servlet 3, which is required for this application
+
+*** End of documentation
