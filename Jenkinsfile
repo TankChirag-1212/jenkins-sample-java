@@ -39,7 +39,7 @@ pipeline {
         stage('Archive Artifacts') {
             steps {
                 // Archive the built artifacts
-                archiveArtifacts artifacts: '/target/*.war', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'target/*.war', allowEmptyArchive: true
             }
         }
     }
