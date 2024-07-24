@@ -1,8 +1,8 @@
 pipeline {
     agent any
 
-    environment {
-        MAVEN_HOME = tool 'Maven_3.9.0' // Ensure this matches your Maven tool name
+    tools {
+        maven 'Maven_3.9.0' // Ensure this matches your Maven tool name
     }
 
     stages {
@@ -16,30 +16,30 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the project using Maven
-                script {
-                    withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
+                // script {
+                //     withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
                         sh "echo $PATH"
                         sh 'mvn clean install'
-                    }
-                }
+                    // }
+                // }
             }
         }
 
         stage('Test') {
             steps {
                 // Test the project using Maven
-                script {
-                    withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
+                // script {
+                //     withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
                         sh 'mvn test'
-                    }
-                }
+                //     }
+                // }
             }
         }
 
         stage('Archive Artifacts') {
             steps {
                 // Archive the built artifacts
-                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+                archiveArtifacts artifacts: '**/target/*.jar', '**/target/*.war', allowEmptyArchive: true
             }
         }
     }
