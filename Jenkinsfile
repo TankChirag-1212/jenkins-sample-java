@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from GitHub repository
-                git url: 'https://github.com/nkheria/DevOpsClassCodes.git', branch: 'master'
+                git credentialsId: '85140349-35f6-4c74-9536-0c5df8f6e9c3', url: 'https://github.com/TankChirag-1212/jenkins-sample-java.git', branch: 'master'
             }
         }
 
@@ -18,7 +18,18 @@ pipeline {
                 // Build the project using Maven
                 script {
                     withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
-                        bat 'mvn clean package'
+                        sh 'mvn clean install'
+                    }
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Test the project using Maven
+                script {
+                    withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
+                        sh 'mvn test'
                     }
                 }
             }
