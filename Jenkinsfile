@@ -18,8 +18,8 @@ pipeline {
                 // Build the project using Maven
                 // script {
                 //     withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
-                        sh "echo $PATH"
-                        sh 'mvn clean install'
+                        // sh "echo $PATH"
+                sh 'mvn clean install'
                     // }
                 // }
             }
@@ -30,7 +30,7 @@ pipeline {
                 // Test the project using Maven
                 // script {
                 //     withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
-                        sh 'mvn test'
+                sh 'mvn test'
                 //     }
                 // }
             }
@@ -39,7 +39,7 @@ pipeline {
         stage('Archive Artifacts') {
             steps {
                 // Archive the built artifacts
-                archiveArtifacts artifacts: '**/target/*.jar', '**/target/*.war', allowEmptyArchive: true
+                archiveArtifacts artifacts: '/target/*.war', allowEmptyArchive: true
             }
         }
     }
