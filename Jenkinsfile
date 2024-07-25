@@ -5,54 +5,27 @@ pipeline {
         maven 'Maven_3.9.0' // Ensure this matches your Maven tool name
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Checkout code from GitHub repository
-                git credentialsId: '85140349-35f6-4c74-9536-0c5df8f6e9c3', url: 'https://github.com/TankChirag-1212/jenkins-sample-java.git', branch: 'master'
-            }
-        }
-
+    stages {    
         stage('Build') {
             steps {
-                // Build the project using Maven
-                // script {
-                //     withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
-                        // sh "echo $PATH"
-                sh 'mvn clean install'
-                    // }
-                // }
+                echo 'Building the Java application...'
+                sh "${env.MAVEN_HOME}/bin/mvn clean install"
             }
         }
-
         stage('Test') {
             steps {
-                // Test the project using Maven
-                // script {
-                //     withEnv(["PATH+MAVEN=${MAVEN_HOME}\\bin"]) {
-                sh 'mvn test'
-                //     }
-                // }
+                echo 'Running tests...'
+                sh "${env.MAVEN_HOME}/bin/mvn test"
             }
-        }
-
-        stage('Archive Artifacts') {
-            steps {
-                // Archive the built artifacts
-                archiveArtifacts artifacts: 'target/*.war', allowEmptyArchive: true
-            }
+    
         }
     }
-
     post {
-        always {
-            echo 'Pipeline finished.'
-        }
         success {
-            echo 'Pipeline succeeded.'
+            echo 'Build and test succeeded!'
         }
         failure {
-            echo 'Pipeline failed.'
+            echo 'Build or test failed!'
         }
     }
 }
