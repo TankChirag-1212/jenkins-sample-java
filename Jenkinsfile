@@ -17,18 +17,14 @@ pipeline {
                 echo 'Running tests...'
                 sh "mvn test"
             }
-    
         }
-
         stage('Deploy') {
             steps {
-                sh "echo 'Deploying App.java..'"
-                sh "cd src/main/java/com/example/"
-                sh "javac App.java"
-                sh "java App"
+                echo 'Deploying App.java..'
+                sh "successfully Deployed!"
             }
         }
-    }
+    }    
     post {
         success {
             echo 'Build and test succeeded!'
