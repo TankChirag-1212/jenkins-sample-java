@@ -21,7 +21,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying App.java..'
-                sh "successfully Deployed!"
+                echo 'successfully Deployed!'
             }
         }
     }    
