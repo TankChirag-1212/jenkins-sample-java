@@ -1,29 +1,49 @@
 pipeline {
     agent any
 
-    stages {    
-        stage('Checkout') {
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('d784ec34-84a6-4363-8d99-5ac8be4a8df8	')
+        REPO_NAME = 'chirag1212/my_repo'
+    }
+
+    stages {
+        stage('Clone Repository') {
             steps {
                 git 'https://github.com/jfrogdev/project-examples.git'
             }
         }
-        stage('Run Dockerfile') {
+
+        stage('Build Docker Image') {
             steps {
-                script{
-                    docker build -t chirag1212/java-app:latest .
-                    docker images
-                    docker push chirag1212/java-app:latest
+                script {
+                    dockerImage = docker.build("${env.REPO_NAME}")
                 }
             }
         }
-        stage('Docker Deploy') {
+
+        stage('Push Docker Image') {
             steps {
-                script{
-                    docker run -itd chirag1212/java-app:latest Sample-container /bin/bash
+                script {
+                    docker.withRegistry('DOCKERHUB_CREDENTIALS') {
+                        // dockerImage.push("${env.BUILD_NUMBER}")
+                        dockerImage.push('latest')
+                    }
                 }
             }
         }
-    }    
+
+        stage('Deploy Container') {
+            steps {
+                script {
+                    sh """
+                    docker run -d --name java-container \
+                    ${env.REPO_NAME}:latest
+                    """
+                }
+            }
+        }
+    }
+
     post {
         success {
             echo 'Build and test succeeded!'
