@@ -1,32 +1,26 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven_3.9.0' // Ensure this matches your Maven tool name
-    }
-
     stages {    
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building the Java application...'
-                sh "mvn clean install"
+                git 'https://github.com/jfrogdev/project-examples.git'
             }
         }
-        stage('Test') {
+        stage('Run Dockerfile') {
             steps {
-                echo 'Running tests...'
-                sh "mvn test"
+                script{
+                    sh 'docker build -t chirag1212/java-app:latest .'
+                    sh 'docker images'
+                    sh 'docker push chirag1212/java-app:latest'
+                }
             }
         }
-        stage('Deploy') {
+        stage('Docker Deploy') {
             steps {
-                echo 'Deploying App.java..'
-                echo 'successfully Deployed!'
-            }
-        }
-        stage('Artifacte') {
-            steps {
-                archiveArtifacts allowEmptyArchive: true, artifacts: 'target/*.jar'
+                script{
+                    sh 'docker run -itd chirag1212/java-app:latest Sample-container /bin/bash'
+                }
             }
         }
     }    
