@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Artifacte') {
             steps {
-                archiveArtifacts allowEmptyArchive: true, artifacts: '/target/*.jar'
+                archiveArtifacts allowEmptyArchive: true, artifacts: 'target/*.jar'
             }
         }
     }    
