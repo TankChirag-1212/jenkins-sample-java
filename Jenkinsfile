@@ -24,6 +24,11 @@ pipeline {
                 echo 'successfully Deployed!'
             }
         }
+        stage('Artifacte') {
+            steps {
+                archiveArtifacts allowEmptyArchive: true, artifacts: '/target/*.war'
+            }
+        }
     }    
     post {
         success {
